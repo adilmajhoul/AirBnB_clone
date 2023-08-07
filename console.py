@@ -3,25 +3,10 @@
 import cmd
 from models.base_model import BaseModel
 from models import storage
-from models.user import User
-from models.state import State
-from models.city import City
-from models.place import Place
-from models.amenity import Amenity
-
-
-def prase_arg(self, arg):
-    """parse the arg"""
-    args = arg.split()
-    if len(args) == 0:
-        return None
-    if args[0] not in self.__models_classes:
-        return None
-    return args[0]
 class HBNBCommand(cmd.Cmd):
     """represents the entry point of the command interpreter"""
     prompt = '(hbnb) '
-    __models_classes = {
+    __mc = {
         "BaseModel",
         "User",
         "State",
@@ -42,33 +27,39 @@ class HBNBCommand(cmd.Cmd):
         """empty line + ENTER shouldn’t execute anything"""
         pass
     
+    def prase_arg(self, arg):
+        """parse the arg"""
+        args = arg.split()
+        if len(args) == 0:
+            return None
+        if args[0] not in self.__models_classes:
+            return None
+        return args[0]
+
     def do_create(self, arg):
         """create a new instance of BaseModel and prints the id"""
-        model = prase_arg(arg)
+        model = self.prase_arg(arg)
         if model is None:
             print("** class name missing **")
             return
         obj = eval(model)()
         obj.save()
         print(obj.id)
-
     def do_show(self, arg):
-        """show the BaseModel instance with the id"""
-        model = prase_arg(arg)
-        if len(model) == 0:
+        """show the string representation of an instance"""
+        arg = self.prase_arg(arg)
+        if len(arg) == 0:
             print("** class name missing **")
             return
-        elif model[0] not in HBNBCommand.__models_classes:
-            print("** class name missing **")
+        elif arg[0] not in BaseModel.__mc:
+            print("** class doesn't exist **")
             return
-        elif len(model) == 1:
+        elif len(arg) == 1:
             print("** instance id missing **")
             return
-        elif "{}.{}".format(model[0], model[1]) not in storage.all():
-            print("** no instance found **")
-            return
         else:
-            print(storage.all()["{}.{}".format(model[0], model[1])])
+            print("{}")
+
 
 
 if __name__ == '__main__':
