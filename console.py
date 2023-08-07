@@ -26,7 +26,5 @@ class HBNBCommand(cmd.Cmd):
         """empty line + ENTER shouldn’t execute anything"""
         pass
 
-
-
-if __name__ == "__main__":
-    HBNBCommand.cmdloop()
+if __name__ == '__main__':
+    HBNBCommand().cmdloop()
