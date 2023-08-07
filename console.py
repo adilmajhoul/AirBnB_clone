@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 """defines the HBNBCommand class"""
 import cmd
+import sys
+import shlex
+import os
 from models.base_model import BaseModel
 from models import storage
 class HBNBCommand(cmd.Cmd):
@@ -63,6 +66,30 @@ class HBNBCommand(cmd.Cmd):
             return
         else:
             print("{} {}".format(arg[0], arg[1]))
+    
+    def do_destroy(self, arg):
+        """destroy an instance"""
+        arg = self.prase_arg(arg)
+        obj = storage.all()
+        if len(arg) == 0:
+            print("** class name missing **")
+            return
+        elif arg[0] not in BaseModel.__mc:
+            print("** class doesn't exist **")
+            return
+        elif len(arg) == 1:
+            print("** instance id missing **")
+            return
+        elif "{}.{}".format(arg[0], arg[1]) not in obj.keys():
+            print("** no instance found **")
+            return
+        else:
+            del obj["{}.{}".format(arg[0], arg[1])]
+            storage.save()
+    
+    def do_clear(self, arg):
+        """clear the console"""
+        os.system("clear")
 
 
 
