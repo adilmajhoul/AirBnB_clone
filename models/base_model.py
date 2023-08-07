@@ -25,6 +25,8 @@ class BaseModel:
                     self.__dict__[key] = datetime.strptime(value, time_format)
                 else:
                     self.__dict__[key] = value
+            else:
+                models.storage.new(self)
 
     def __str__(self):
         """ class string representation """
@@ -35,6 +37,7 @@ class BaseModel:
     def save(self):
         """ update the last updated time to now """
         self.updated_at = datetime.today()
+        models.storage.save()
 
     def to_dict(self):
         """ create new dict for its current class """
