@@ -48,6 +48,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """show the string representation of an instance"""
         arg = self.prase_arg(arg)
+        obj = storage.all()
         if len(arg) == 0:
             print("** class name missing **")
             return
@@ -57,8 +58,11 @@ class HBNBCommand(cmd.Cmd):
         elif len(arg) == 1:
             print("** instance id missing **")
             return
+        elif "{}.{}".format(arg[0], arg[1]) not in obj.keys():
+            print("** no instance found **")
+            return
         else:
-            print("{}")
+            print("{} {}".format(arg[0], arg[1]))
 
 
 
