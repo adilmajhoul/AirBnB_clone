@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ basemodel the mother of all models """
 
-
+import models
 from uuid import uuid4
 from datetime import datetime
 import json
