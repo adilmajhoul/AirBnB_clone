@@ -40,7 +40,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """ create new dict for its current class """
+        """ create new dict for the current class """
         new_dict = self.__dict__.copy()
         new_dict["created_at"] = self.created_at.isoformat()
         new_dict["updated_at"] = self.updated_at.isoformat()
