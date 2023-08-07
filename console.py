@@ -32,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
         args = arg.split()
         if len(args) == 0:
             return None
-        if args[0] not in self.__models_classes:
+        if args[0] not in self.__mc:
             return None
         return args[0]
 
