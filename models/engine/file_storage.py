@@ -32,7 +32,7 @@ class FileStorage(BaseModel):
 
     def reload(self):
         """ deserializes the JSON file in __file_path to __objects """
-        if Path("__file_path").exists():
+        if Path(self.__file_path).exists():
             with open(FileStorage.__file_path, mode="r", encoding="utf-8") as f:
                 new_dict = json.load(f)
             for key, value in new_dict.items():
