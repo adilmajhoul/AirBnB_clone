@@ -1,7 +1,9 @@
 #!/usr/bin/python3
 """ define FileStorage class. """
+
 import json
 from pathlib import Path
+from models.base_model import BaseModel
 
 
 class FileStorage:
