@@ -10,24 +10,26 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models.place import Place
 from models import storage
 
 def parse_arg(arg):
-    curly_brkt = re.search(r'\{(.*?)\}', arg)
-    square_brkt = re.search(r'\[(.*?)\]', arg)
-    if curly_brkt is None:
-        if square_brkt is None:
-            return [i.strip() for i in arg.split(",")]
+    curly_braces = re.search(r"\{(.*?)\}", arg)
+    brackets = re.search(r"\[(.*?)\]", arg)
+    if curly_braces is None:
+        if brackets is None:
+            return [i.strip(",") for i in split(arg)]
         else:
-            lx = split(arg[:square_brkt.span()[0]])
-            rlx = [i.strip(",") for i in lx]
-            rlx.append(square_brkt.group())
-            return rlx
+            lexer = split(arg[:brackets.span()[0]])
+            retl = [i.strip(",") for i in lexer]
+            retl.append(brackets.group())
+            return retl
     else:
-        lx = split(arg[:curly_brkt.span()[0]])
-        rlx = [i.strip(",") for i in lx]
-        rlx.append(curly_brkt.group())
-        return rlx
+        lexer = split(arg[:curly_braces.span()[0]])
+        retl = [i.strip(",") for i in lexer]
+        retl.append(curly_braces.group())
+        return retl
+
 
 class HBNBCommand(cmd.Cmd):
     """represents the entry point of the command interpreter"""
@@ -83,21 +85,22 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) == 0:
             print("** class name missing **")
             return
-        elif arg[0] not in self.__models_classes:
+        elif arg[0] not in HBNBCommand.__models_classes:
             print("** class doesn't exist **")
             return
         elif len(arg) == 1:
             print("** instance id missing **")
             return
-        elif "{}.{}".format(arg[0], arg[1]) not in obj.keys():
+        elif "{}.{}".format(arg[0], arg[1]) not in obj:
             print("** no instance found **")
             return
         else:
-            print("{} {}".format(arg[0], arg[1]))
+            print(obj["{}.{}".format(arg[0], arg[1])])
 
     def do_destroy(self, arg):
         """destroy an instance"""
         arg = parse_arg(arg)
+        print(arg)
         obj = storage.all()
         if len(arg) == 0:
             print("** class name missing **")
