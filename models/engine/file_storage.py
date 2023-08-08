@@ -1,12 +1,10 @@
 #!/usr/bin/python3
 """ define FileStorage class. """
 import json
-from models.base_model import BaseModel
-from models.user import User
 from pathlib import Path
 
 
-class FileStorage(BaseModel):
+class FileStorage:
     """ storage class it's responsible for processing then storing data """
 
     __file_path = "file.json"
@@ -42,4 +40,3 @@ class FileStorage(BaseModel):
                 FileStorage.__objects[key] = eval(class_name)(**value)
         else:
             return
-

@@ -12,11 +12,10 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         """ base model constructor """
 
+        time_format = "%Y-%m-%dT%H:%M:%S.%f"
         self.id = str(uuid4())
         self.created_at = datetime.today()
         self.updated_at = datetime.today()
-
-        time_format = "%Y-%m-%dT%H:%M:%S.%f"
 
         if len(kwargs) != 0:
             for key, value in kwargs.items():
@@ -24,8 +23,8 @@ class BaseModel:
                     self.__dict__[key] = datetime.strptime(value, time_format)
                 else:
                     self.__dict__[key] = value
-            else:
-                models.storage.new(self)
+        else:
+            models.storage.new(self)
 
     def __str__(self):
         """ class string representation """
