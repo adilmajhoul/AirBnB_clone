@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """defines the HBNBCommand class"""
 import cmd
+import re
+from shlex import split
 import os
 from models.base_model import BaseModel
 from models.user import User
@@ -10,7 +12,22 @@ from models.amenity import Amenity
 from models.review import Review
 from models import storage
 
-
+def parse_arg(arg):
+    curly_brkt = re.search(r'\{(.*?)\}', arg)
+    square_brkt = re.search(r'\[(.*?)\]', arg)
+    if curly_brkt is None:
+        if square_brkt is None:
+            return [i.strip() for i in arg.split(",")]
+        else:
+            lx = split(arg[:square_brkt.span()[0]])
+            rlx = [i.strip(",") for i in lx]
+            rlx.append(square_brkt.group())
+            return rlx
+    else:
+        lx = split(arg[:curly_brkt.span()[0]])
+        rlx = [i.strip(",") for i in lx]
+        rlx.append(curly_brkt.group())
+        return rlx
 
 class HBNBCommand(cmd.Cmd):
     """represents the entry point of the command interpreter"""
@@ -47,20 +64,21 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """Create a new instance of BaseModel and print the id"""
-        model = self.parse_arg(arg)
-        if model is None:
+        model = parse_arg(arg)
+        if len(model) == 0:
             print("** class name missing **")
             return
+        elif model[0] not in HBNBCommand.__models_classes:
+            print("** class doesn't exist **")
+            return
         else:
-            obj = eval(model)()
-            obj.save()
-            print(obj.id)
+            print(eval(model[0])().id)
+            print(model[0])
             storage.save()
-            print(model)
 
     def do_show(self, arg):
         """show the string representation of an instance"""
-        arg = self.parse_arg(arg)
+        arg = parse_arg(arg)
         obj = storage.all()
         if len(arg) == 0:
             print("** class name missing **")
@@ -79,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """destroy an instance"""
-        arg = self.parse_arg(arg)
+        arg = parse_arg(arg)
         obj = storage.all()
         if len(arg) == 0:
             print("** class name missing **")
@@ -99,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """show all instances"""
-        arg = self.parse_arg(arg)
+        arg = parse_arg(arg)
         obj = storage.all()
         if len(arg) == 0:
             for key, value in obj.items():
@@ -114,7 +132,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         """update <class name> <id> <attribute name> "<attribute value>"""
-        arg = self.parse_arg(arg)
+        arg = parse_arg(arg)
         obj = storage.all()
         if len(arg) == 0:
             print("** class name missing **")
