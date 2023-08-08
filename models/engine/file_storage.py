@@ -2,6 +2,7 @@
 """ define FileStorage class. """
 import json
 from models.base_model import BaseModel
+from models.user import User
 from pathlib import Path
 
 
@@ -13,26 +14,26 @@ class FileStorage(BaseModel):
 
     def all(self):
         """ returns dictionary __objects """
-        return self.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """ add new object to dictionary __objects """
         object_name = obj.__class__.__name__
-        self.__objects[f"{object_name}.{obj.id}"] = obj
+        FileStorage.__objects[f"{object_name}.{obj.id}"] = obj
 
     def save(self):
         """ serializes __objects and writes it to json file path"""
         # Convert each object in __objects to a dictionary using to_dict() method.
         new_obj_dict = {}
-        for keys in self.__objects.keys():
-            new_obj_dict[keys] = self.__objects[keys].to_dict()
+        for keys in FileStorage.__objects.keys():
+            new_obj_dict[keys] = FileStorage.__objects[keys].to_dict()
         # Write the dictionary of objects to the JSON file.
-        with open(self.__file_path, "w") as file:
+        with open(FileStorage.__file_path, "w") as file:
             json.dump(new_obj_dict, file)
 
     def reload(self):
         """ deserializes the JSON file in __file_path to __objects """
-        if Path(self.__file_path).exists():
+        if Path(FileStorage.__file_path).exists():
             with open(FileStorage.__file_path, mode="r", encoding="utf-8") as f:
                 new_dict = json.load(f)
             for key, value in new_dict.items():
