@@ -29,7 +29,7 @@ class FileStorage:
             new_obj_dict[keys] = FileStorage.__objects[keys].to_dict()
         # Write the dictionary of objects to the JSON file.
         with open(FileStorage.__file_path, "w") as file:
-            json.dump(new_obj_dict, file)
+            json.dump(new_obj_dict, file, indent=4)
 
     def reload(self):
         """ deserializes the JSON file in __file_path to __objects """
