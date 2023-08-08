@@ -175,6 +175,24 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     ob.__dict__[key] = value
         storage.save()
+    
+    def do_count(self, arg):
+        """count the number of instances"""
+        arg = parse_arg(arg)
+        obj = storage.all()
+        if len(arg) == 0:
+            print("** class name missing **")
+            return
+        elif arg[0] not in HBNBCommand.__models_classes:
+            print("** class doesn't exist **")
+            return
+        else:
+            count = 0
+            for key, value in obj.items():
+                if arg[0] == value.__class__.__name__:
+                    count += 1
+            print(count)
+
 
     def do_clear(self, arg):
         """clear the console"""
