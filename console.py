@@ -13,6 +13,7 @@ from models.review import Review
 from models.place import Place
 from models import storage
 
+
 def parse_arg(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
@@ -43,6 +44,40 @@ class HBNBCommand(cmd.Cmd):
         "Amenity",
         "Review"
     }
+    
+    def diff_syntax(self, arg):
+        """Method to take care of following commands:
+        <class name>.all()
+        <class name>.count()
+        <class name>.show(<id>)
+        <class name>.destroy(<id>)
+        <class name>.update(<id>, <attribute name>, <attribute value>)
+        <class name>.update(<id>, <dictionary representation)
+
+        Description:
+            Creates a list representations of functional models
+            Then use the functional methods to implement user
+            commands, by validating all the input commands
+        """
+        new_syntax = {
+            "all": self.do_all,
+            "count": self.do_count,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update
+        }
+        match = re.search(r"\.(.*?)\(", arg)
+        if match is not None:
+            arg = [arg[:match.span()[0]], arg[match.span()[1]:]]
+            match = re.search(r"\((.*?)\)", arg[1])
+            if match is not None:
+                cmd = [arg[1][:match.span()[0]], match.group()[1:-1]]
+                if cmd[0] in new_syntax.keys():
+                    cl = "{} {}".format(arg[0], cmd[1])
+                    return new_syntax[cmd[0]](cl)
+        print("*** Unknown syntax: {}".format(arg))
+        return False
+
     def do_quit(self, line):
         """Quit command to exit the program"""
         return True
@@ -54,7 +89,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         """empty line + ENTER shouldn’t execute anything"""
         pass
-    
+
     def parse_arg(self, arg):
         """parse the arg"""
         args = arg.split()
@@ -175,7 +210,7 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     ob.__dict__[key] = value
         storage.save()
-    
+
     def do_count(self, arg):
         """count the number of instances"""
         arg = parse_arg(arg)
