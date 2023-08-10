@@ -44,7 +44,7 @@ class HBNBCommand(cmd.Cmd):
         "Amenity",
         "Review"
     }
-    
+
     def diff_syntax(self, arg):
         """Method to take care of following commands:
         <class name>.all()
@@ -90,15 +90,6 @@ class HBNBCommand(cmd.Cmd):
         """empty line + ENTER shouldn’t execute anything"""
         pass
 
-    def parse_arg(self, arg):
-        """parse the arg"""
-        args = arg.split()
-        if len(args) == 0:
-            return None
-        if args[0] not in self.__models_classes:
-            return None
-        return args[0]
-
     def do_create(self, arg):
         """Create a new instance of BaseModel and print the id"""
         model = parse_arg(arg)
@@ -120,13 +111,13 @@ class HBNBCommand(cmd.Cmd):
         if len(arg) == 0:
             print("** class name missing **")
             return
-        elif arg[0] not in HBNBCommand.__models_classes:
+        if arg[0] not in HBNBCommand.__models_classes:
             print("** class doesn't exist **")
             return
-        elif len(arg) == 1:
+        if len(arg) == 1:
             print("** instance id missing **")
             return
-        elif "{}.{}".format(arg[0], arg[1]) not in obj:
+        if "{}.{}".format(arg[0], arg[1]) not in obj:
             print("** no instance found **")
             return
         else:
