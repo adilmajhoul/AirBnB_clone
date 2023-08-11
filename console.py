@@ -210,6 +210,8 @@ class HBNBCommand(cmd.Cmd):
                     count += 1
             print(count)
 
+
+
     def do_clear(self, arg):
         """clear the console"""
         os.system("clear")
