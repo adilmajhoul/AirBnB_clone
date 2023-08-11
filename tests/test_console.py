@@ -151,7 +151,7 @@ class TestHBNBcmd_create(unittest.TestCase):
         with patch("sys.stdout", new_callable=StringIO) as output:
             HBNBCommand().onecmd("create MyModel")
             self.assertEqual(cls, output.getvalue().strip())
-    
+
     def test_create(self):
         """test create"""
         with patch("sys.stdout", new_callable=StringIO) as output:
@@ -175,6 +175,44 @@ class TestHBNBcmd_create(unittest.TestCase):
         with patch("sys.stdout", new_callable=StringIO) as output:
             HBNBCommand().onecmd("create Review")
             self.assertTrue(len(output.getvalue().strip()) > 0)
+
+    def test_obj_create(self):
+        """ "create the creation of the id"""
+        with patch("sys.stdout", new_callable=StringIO) as output:
+            self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
+            self.assertLess(0, len(output.getvalue().strip()))
+            key = "BaseModel." + output.getvalue().strip()
+            self.assertTrue(key in storage.all().keys())
+        with patch("sys.stdout", new_callable=StringIO) as output:
+            self.assertFalse(HBNBCommand().onecmd("create User"))
+            self.assertLess(0, len(output.getvalue().strip()))
+            key = "User." + output.getvalue().strip()
+            self.assertTrue(key in storage.all().keys())
+        with patch("sys.stdout", new_callable=StringIO) as output:
+            self.assertFalse(HBNBCommand().onecmd("create State"))
+            self.assertLess(0, len(output.getvalue().strip()))
+            key = "State." + output.getvalue().strip()
+            self.assertTrue(key in storage.all().keys())
+        with patch("sys.stdout", new_callable=StringIO) as output:
+            self.assertFalse(HBNBCommand().onecmd("create City"))
+            self.assertLess(0, len(output.getvalue().strip()))
+            key = "City." + output.getvalue().strip()
+            self.assertTrue(key in storage.all().keys())
+        with patch("sys.stdout", new_callable=StringIO) as output:
+            self.assertFalse(HBNBCommand().onecmd("create Amenity"))
+            self.assertLess(0, len(output.getvalue().strip()))
+            key = "Amenity." + output.getvalue().strip()
+            self.assertTrue(key in storage.all().keys())
+        with patch("sys.stdout", new_callable=StringIO) as output:
+            self.assertFalse(HBNBCommand().onecmd("create Place"))
+            self.assertLess(0, len(output.getvalue().strip()))
+            key = "Place." + output.getvalue().strip()
+            self.assertTrue(key in storage.all().keys())
+        with patch("sys.stdout", new_callable=StringIO) as output:
+            self.assertFalse(HBNBCommand().onecmd("create Review"))
+            self.assertLess(0, len(output.getvalue().strip()))
+            key = "Review." + output.getvalue().strip()
+            self.assertTrue(key in storage.all().keys())
 
 
 class HBNBcmd_show(unittest.TestCase):
@@ -269,7 +307,7 @@ class HBNBcmd_show(unittest.TestCase):
             )
             self.assertEqual(cls, output.getvalue().strip())
 
-# TODO: test over getting the right id after you create use "def test_obj_show(self)"
+    # TODO: test over getting the right id after you create use "def test_obj_show(self)"
 
     def test_show_basemodel(self):
         """test over show basemodel"""
@@ -348,6 +386,42 @@ class HBNBcmd_show(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd(command))
             self.assertEqual(obj.__str__(), output.getvalue().strip())
 
+    # def test_with_diff_syntax(self):
+    #     err = "** instance id missing **"
+    #     with patch("sys.stdout", new=StringIO()) as output:
+    #         self.assertFalse( HBNBCommand().onecmd("BaseModel.show()") )
+    #         self.assertEqual(err, output.getvalue().strip())
+    # TODO: keep following the waves
 
+
+class TestHBNBCommand_all(unittest.TestCase):
+    """test the all cmd"""
+    
+    @classmethod
+    def setup(self):
+        try:
+            os.rename("file.json", "tmp")
+        except IOError:
+            pass
+        FileStorage.__objects = {}
+
+    @classmethod
+    def down(self):
+        try:
+            os.remove("file.json")
+        except IOError:
+            pass
+        try:
+            os.rename("tmp", "file.json")
+        except IOError:
+            pass
+    
+    def test_all_invalid(self):
+        msg = "** class doesn't exist **"
+        with patch ("sys.stdout", new=StringIO()) as output:
+            self.assertFalse(HBNBCommand().onecmd("all Model"))
+            self.assertEqual(msg, output.getvalue().strip())
+        
+        
 if __name__ == "__main__":
     unittest.main()
