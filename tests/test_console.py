@@ -6,8 +6,8 @@ from unittest.mock import patch
 from io import StringIO
 from models import storage
 import unittest
-import sys
 import os
+import sys
 
 """
 Unittest classes:
@@ -26,10 +26,10 @@ Unittest classes:
 """
 
 
-# TODO:  TestHBNBcmd_create
+
 # TODO:   TestHBNBcmd_show
 # TODO:   TestHBNBcmd_destroy
-# TODO:   TestHBNBcmd_all
+
 # TODO:  TestHBNBcmd_update
 # TODO:   TestHBNBcmd_count
 
@@ -418,9 +418,13 @@ class TestHBNBCommand_all(unittest.TestCase):
     
     def test_all_invalid(self):
         msg = "** class doesn't exist **"
+        msg1 = "** class name is missing **"
         with patch ("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("all Model"))
             self.assertEqual(msg, output.getvalue().strip())
+        # with patch ("sys.stdout", new=StringIO()) as output:
+        #     self.assertFalse(HBNBCommand().onecmd("all"))
+        #     self.assertEqual(msg1, output.getvalue().strip())
 
     def test_all_valid(self):
         with patch("sys.stdout", new_callable=StringIO) as output:
@@ -441,6 +445,6 @@ class TestHBNBCommand_all(unittest.TestCase):
         with patch("sys.stdout", new_callable=StringIO) as output:
             self.assertFalse(HBNBCommand().onecmd("all Amenity"))
             self.assertTrue(len(output.getvalue().strip()) > 0)
-        
+
 if __name__ == "__main__":
     unittest.main()

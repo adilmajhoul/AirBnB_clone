@@ -7,7 +7,6 @@ from time import sleep
 
 
 class TestBaseModel(unittest.TestCase):
-
     def test_instantiation(self):
         instance = BaseModel()
         self.assertIsInstance(instance, BaseModel)
@@ -15,8 +14,7 @@ class TestBaseModel(unittest.TestCase):
     def test_constructor_with_kwargs(self):
         created_at_str = "2023-08-11T12:01:01.000001"
         updated_at_str = "2023-08-12T12:02:02.000002"
-        instance = BaseModel(created_at=created_at_str,
-                             updated_at=updated_at_str)
+        instance = BaseModel(created_at=created_at_str, updated_at=updated_at_str)
         self.assertEqual(instance.created_at.isoformat(), created_at_str)
         self.assertEqual(instance.updated_at.isoformat(), updated_at_str)
 
@@ -44,11 +42,11 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict_method(self):
         instance = BaseModel()
         instance_dict = instance.to_dict()
-        expected_keys = {'id', 'created_at', 'updated_at', '__class__'}
+        expected_keys = {"id", "created_at", "updated_at", "__class__"}
         self.assertEqual(set(instance_dict.keys()), expected_keys)
-        self.assertIsInstance(instance_dict['created_at'], str)
-        self.assertIsInstance(instance_dict['updated_at'], str)
-        self.assertEqual(instance_dict['__class__'], 'BaseModel')
+        self.assertIsInstance(instance_dict["created_at"], str)
+        self.assertIsInstance(instance_dict["updated_at"], str)
+        self.assertEqual(instance_dict["__class__"], "BaseModel")
 
 
 if __name__ == "__main__":
