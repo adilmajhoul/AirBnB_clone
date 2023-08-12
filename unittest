@@ -5,6 +5,13 @@ import os
 import sys
 import unittest
 
+# ANSI color codes
+class Color:
+    RED = '\033[91m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RESET = '\033[0m'
+
 # Add your project's root directory to the PYTHONPATH
 project_root = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, project_root)
@@ -13,4 +20,11 @@ sys.path.insert(0, project_root)
 loader = unittest.TestLoader()
 test_suite = loader.discover('tests', pattern='test_*.py')
 runner = unittest.TextTestRunner(verbosity=2)
+
+# Run the tests and colorize the output
 result = runner.run(test_suite)
+if result.wasSuccessful():
+    print(Color.GREEN + "All tests passed!" + Color.RESET)
+else:
+    print(Color.RED + "Some tests failed." + Color.RESET)
+
