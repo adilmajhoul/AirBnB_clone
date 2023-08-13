@@ -29,6 +29,7 @@ class Testtheuser(unittest.TestCase):
         self.assertIsInstance(new.first_name, str)
         self.assertIsInstance(new.last_name, str)
 
+
 class Testcodestyle(unittest.TestCase):
     """test codestyle"""
     def test_pep8(self):
