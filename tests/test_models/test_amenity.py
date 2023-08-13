@@ -3,6 +3,7 @@ import unittest
 from models.engine.file_storage import FileStorage
 from models.amenity import Amenity
 from models import storage
+from datetime import datetime
 
 """ Amenity class unit test """
 
@@ -63,6 +64,9 @@ class testtheamenity(unittest.TestCase):
         self.assertTrue(hasattr(new, "name"))
         """type test"""
         self.assertIsInstance(new.name, str)
+        self.assertIsInstance(new.id, str)
+        self.assertIsInstance(new.created_at, datetime)
+        self.assertIsInstance(new.updated_at, datetime)
 
 
 if __name__ == '__main__':
