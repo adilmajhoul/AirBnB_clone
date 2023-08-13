@@ -46,26 +46,81 @@ class HBNBCommand(cmd.Cmd):
         "Review",
     }
 
-    def diff_syntax(self, arg):
-        """Parses the input and handles custom syntax"""
-        if '(' in arg and ')' in arg:
-            match = re.search(r"(\w+)\.(\w+)\(\)", arg)
+    def default(self, argu):
+        """
+        default commands
+            usage: <class name>.<command>(<id>)
+        """
+        if argu.endswith(".all()"):
+            """
+            Check if the command matches
+            <class_name>.all()
+            """
+            class_name = argu[:-6].strip()
+            if class_name:
+                self.do_all(class_name)
+        elif argu.endswith(".count()"):
+            """
+            Check if the command matches
+            <class_name>.count()
+            """
+            class_name = argu[:-8].strip()
+            if class_name in self.__models_classes:
+                num_obj = sum(1 for key in storage.all() if class_name in key)
+                print(num_obj)
+            else:
+                print("** class doesn't exist **")
+        elif ".show(" in argu and argu.endswith(")"):
+            """
+            Check if the command matches
+            <class_name>.show(<id>)
+            """
+            match = re.search(r"(\w+)\.show\((.*)\)", argu)
             if match:
                 class_name = match.group(1)
-                arg = f"{match.group(2)} {class_name}"
-        return arg
+                instance_id = match.group(2)
+                self.do_show(f"{class_name} {instance_id}")
+        elif ".destroy(" in argu and argu.endswith(")"):
+            """
+            Check if the command matches
+            <class_name>.destroy(<id>)
+            """
+            match = re.search(r"(\w+)\.destroy\((.*)\)", argu)
+            if match:
+                class_name = match.group(1)
+                instance_id = match.group(2)
+                self.do_destroy(f"{class_name} {instance_id}")
+        elif ".update(" in argu and argu.endswith(")"):
+            match = re.search(r"(\w+)\.update\((.*)\)", argu)
+            if match:
+                class_name = match.group(1)
+                args = match.group(2)
+                if "{" in args and args.endswith("}"):
+                    id = args.split(", ")[0]
+                    str_dict = "{" + args.split("{")[1]
+                    dictionary = dict(eval(str_dict))
+                    string = f"{class_name} {id}"
+                    for attr in dictionary:
+                        self.do_update(f'{string} {attr}"{str(dictionary[attr])}"')
+                else:
+                    string = class_name
+                    for elm in args.split(", "):
+                        string += " " + elm
+                    self.do_update(string)
+        else:
+            print("*** Unknown syntax: " + argu)
 
-    def do_quit(self, line):
+    def do_quit(self, argu):
         """Quit command to exit the program"""
         return True
 
-    def do_EOF(self, line):
+    def do_EOF(self, argu):
         """EOF command to exit the program"""
-        print()  # ! new line could be error
+        print()  # ! new argu could be error
         return True
 
-    def emptyline(self):
-        """empty line + ENTER shouldn’t execute anything"""
+    def emptyargu(self):
+        """empty argu + ENTER shouldn’t execute anything"""
         pass
 
     def do_create(self, arg):
