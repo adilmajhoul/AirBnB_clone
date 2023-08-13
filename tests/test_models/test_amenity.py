@@ -52,5 +52,18 @@ class TestAmenity(unittest.TestCase):
         self.assertEqual(len_after, len_before + 1)
 
 
+class testtheamenity(unittest.TestCase):
+    """test the amenity class"""
+    def test_theamenity(self):
+        """test the amenity"""
+        new = Amenity()
+        self.assertTrue(hash(new), "id")
+        self.assertTrue(hasattr(new, "created_at"))
+        self.assertTrue(hasattr(new, "updated_at"))
+        self.assertTrue(hasattr(new, "name"))
+        """type test"""
+        self.assertIsInstance(new.name, str)
+
+
 if __name__ == '__main__':
     unittest.main()
