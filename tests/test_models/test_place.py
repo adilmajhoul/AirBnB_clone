@@ -10,13 +10,15 @@ from io import StringIO
 import sys
 from unittest.mock import patch
 
-
 class Testtheplace(unittest.TestCase):
     """test the place class"""
     def test_theplace(self):
         """test the place"""
         new = Place()
-        self.assertTrue(hash(new), "id")
+        self.assertTrue(hasattr(new, "city_id"))
+        self.assertTrue(hasattr(new, "user_id"))
+        self.assertTrue(hasattr(new, "description"))
+        self.assertTrue(hasattr(new, "id"))
         self.assertTrue(hasattr(new, "created_at"))
         self.assertTrue(hasattr(new, "updated_at"))
         self.assertTrue(hasattr(new, "name"))
@@ -36,6 +38,13 @@ class Testtheplace(unittest.TestCase):
         self.assertIsInstance(new.latitude, float)
         self.assertIsInstance(new.longitude, float)
         self.assertIsInstance(new.amenity_ids, list)
+        self.assertIsInstance(new.city_id, str)
+        self.assertIsInstance(new.user_id, str)
+        self.assertIsInstance(new.description, str)
+        self.assertIsInstance(new.id, str)
+        self.assertIsInstance(new.created_at, datetime)
+        self.assertIsInstance(new.updated_at, datetime)
+
 
 
 class Testcodestyle(unittest.TestCase):

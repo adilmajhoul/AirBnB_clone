@@ -62,7 +62,7 @@ class testthecity(unittest.TestCase):
     def test_thecity(self):
         """test the city"""
         new = City()
-        self.assertTrue(hash(new), "id")
+        self.assertTrue(hasattr(new, "id"))
         self.assertTrue(hasattr(new, "created_at"))
         self.assertTrue(hasattr(new, "updated_at"))
         self.assertTrue(hasattr(new, "name"))
@@ -72,6 +72,7 @@ class testthecity(unittest.TestCase):
         self.assertIsInstance(new.state_id, str)
         self.assertIsInstance(new.updated_at, datetime)
         self.assertIsInstance(new.created_at, datetime)
+        self.assertIsInstance(new.id, str)
 
 
 if __name__ == '__main__':
