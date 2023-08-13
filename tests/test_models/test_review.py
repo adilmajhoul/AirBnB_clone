@@ -4,10 +4,30 @@ import unittest
 from models.base_model import BaseModel
 from datetime import datetime
 import pycodestyle
+from models.user import User
 import models
 from io import StringIO
 import sys
 from unittest.mock import patch
+
+
+class Testtheuser(unittest.TestCase):
+    """test the user class"""
+    def test_theuser(self):
+        """test the user"""
+        new = User()
+        self.assertTrue(hash(new), "id")
+        self.assertTrue(hasattr(new, "created_at"))
+        self.assertTrue(hasattr(new, "updated_at"))
+        self.assertTrue(hasattr(new, "email"))
+        self.assertTrue(hasattr(new, "password"))
+        self.assertTrue(hasattr(new, "first_name"))
+        self.assertTrue(hasattr(new, "last_name"))
+        """type test"""
+        self.assertIsInstance(new.email, str)
+        self.assertIsInstance(new.password, str)
+        self.assertIsInstance(new.first_name, str)
+        self.assertIsInstance(new.last_name, str)
 
 
 class Testcodestyle(unittest.TestCase):

@@ -4,10 +4,24 @@ import unittest
 from models.base_model import BaseModel
 from datetime import datetime
 import pycodestyle
+from models.state import State
 import models
 from io import StringIO
 import sys
 from unittest.mock import patch
+
+
+class Testthestate(unittest.TestCase):
+    """test the state class"""
+    def test_thestate(self):
+        """test the state"""
+        new = State()
+        self.assertTrue(hash(new), "id")
+        self.assertTrue(hasattr(new, "created_at"))
+        self.assertTrue(hasattr(new, "updated_at"))
+        self.assertTrue(hasattr(new, "name"))
+        """type test"""
+        self.assertIsInstance(new.name, str)
 
 
 class Testcodestyle(unittest.TestCase):
