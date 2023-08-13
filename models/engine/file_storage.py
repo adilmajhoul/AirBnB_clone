@@ -29,7 +29,8 @@ class FileStorage:
 
     def save(self):
         """ serializes __objects and writes it to json file path"""
-        # Convert each object in __objects to a dictionary using to_dict() method.
+        # Convert each object in __objects
+        # to a dictionary using to_dict() method.
         new_obj_dict = {}
         for keys in FileStorage.__objects.keys():
             new_obj_dict[keys] = FileStorage.__objects[keys].to_dict()
@@ -40,7 +41,8 @@ class FileStorage:
     def reload(self):
         """ deserializes the JSON file in __file_path to __objects """
         if Path(FileStorage.__file_path).exists():
-            with open(FileStorage.__file_path, mode="r", encoding="utf-8") as f:
+            with open(FileStorage.__file_path,
+                      mode="r", encoding="utf-8") as f:
                 new_dict = json.load(f)
             for key, value in new_dict.items():
                 class_name = value["__class__"]
