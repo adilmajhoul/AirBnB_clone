@@ -3,7 +3,7 @@ import unittest
 from models.engine.file_storage import FileStorage
 from models.city import City
 from models import storage
-
+import pycodestyle
 """ city class unit test """
 
 
@@ -40,8 +40,13 @@ class TestCity(unittest.TestCase):
         len_after = len(storage.all())
         self.assertEqual(len_after, len_before + 1)
 
-class Testpycodestyle(unittest.TestCase):
-    pass
-
+class Testcodestyle(unittest.TestCase):
+    """test codestyle"""
+    def test_pep8(self):
+        """test pep8"""
+        pyc = pycodestyle.StyleGuide(quiet=True)
+        result = pyc.check_files(["models/user.py"])
+        errorMessage = "Found code style errors (and warnings)."
+        self.assertEqual(result.total_errors, 0, errorMessage)
 if __name__ == '__main__':
     unittest.main()
