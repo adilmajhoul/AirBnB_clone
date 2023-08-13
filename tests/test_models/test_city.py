@@ -40,6 +40,7 @@ class TestCity(unittest.TestCase):
         len_after = len(storage.all())
         self.assertEqual(len_after, len_before + 1)
 
+
 class Testcodestyle(unittest.TestCase):
     """test codestyle"""
     def test_pep8(self):
@@ -48,5 +49,7 @@ class Testcodestyle(unittest.TestCase):
         result = pyc.check_files(["models/user.py"])
         errorMessage = "Found code style errors (and warnings)."
         self.assertEqual(result.total_errors, 0, errorMessage)
+
+
 if __name__ == '__main__':
     unittest.main()
