@@ -57,5 +57,22 @@ class Testcodestyle(unittest.TestCase):
         self.assertEqual(result.total_errors, 0, errorMessage)
 
 
+class testthecity(unittest.TestCase):
+    """test the city class"""
+    def test_thecity(self):
+        """test the city"""
+        new = City()
+        self.assertTrue(hash(new), "id")
+        self.assertTrue(hasattr(new, "created_at"))
+        self.assertTrue(hasattr(new, "updated_at"))
+        self.assertTrue(hasattr(new, "name"))
+        self.assertTrue(hasattr(new, "state_id"))
+        """type test"""
+        self.assertIsInstance(new.name, str)
+        self.assertIsInstance(new.state_id, str)
+        self.assertIsInstance(new.updated_at, datetime)
+        self.assertIsInstance(new.created_at, datetime)
+
+
 if __name__ == '__main__':
     unittest.main()

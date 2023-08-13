@@ -22,6 +22,9 @@ class Testthestate(unittest.TestCase):
         self.assertTrue(hasattr(new, "name"))
         """type test"""
         self.assertIsInstance(new.name, str)
+        self.assertIsInstance(new.id, str)
+        self.assertIsInstance(new.created_at, datetime)
+        self.assertIsInstance(new.updated_at, datetime)
 
 
 class Testcodestyle(unittest.TestCase):
