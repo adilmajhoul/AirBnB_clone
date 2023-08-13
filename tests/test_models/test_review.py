@@ -2,9 +2,9 @@
 import json
 import unittest
 from models.base_model import BaseModel
+from models.review import Review
 from datetime import datetime
 import pycodestyle
-from models.user import User
 import models
 from io import StringIO
 import sys
@@ -15,19 +15,21 @@ class Testtheuser(unittest.TestCase):
     """test the user class"""
     def test_theuser(self):
         """test the user"""
-        new = User()
-        self.assertTrue(hash(new), "id")
+        new = Review()
+        self.assertTrue(hasattr(new, "id"))
         self.assertTrue(hasattr(new, "created_at"))
         self.assertTrue(hasattr(new, "updated_at"))
-        self.assertTrue(hasattr(new, "email"))
-        self.assertTrue(hasattr(new, "password"))
-        self.assertTrue(hasattr(new, "first_name"))
-        self.assertTrue(hasattr(new, "last_name"))
+        self.assertTrue(hasattr(new, "place_id"))
+        self.assertTrue(hasattr(new, "user_id"))
+        self.assertTrue(hasattr(new, "text"))
+
         """type test"""
-        self.assertIsInstance(new.email, str)
-        self.assertIsInstance(new.password, str)
-        self.assertIsInstance(new.first_name, str)
-        self.assertIsInstance(new.last_name, str)
+        self.assertIsInstance(new.id, str)
+        self.assertIsInstance(new.created_at, datetime)
+        self.assertIsInstance(new.updated_at, datetime)
+        self.assertIsInstance(new.place_id, str)
+        self.assertIsInstance(new.user_id, str)
+        self.assertIsInstance(new.text, str)
 
 
 class Testcodestyle(unittest.TestCase):
