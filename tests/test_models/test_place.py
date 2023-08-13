@@ -2,12 +2,40 @@
 import json
 import unittest
 from models.base_model import BaseModel
+from models.place import Place
 from datetime import datetime
 import pycodestyle
 import models
 from io import StringIO
 import sys
 from unittest.mock import patch
+
+
+class Testtheplace(unittest.TestCase):
+    """test the place class"""
+    def test_theplace(self):
+        """test the place"""
+        new = Place()
+        self.assertTrue(hash(new), "id")
+        self.assertTrue(hasattr(new, "created_at"))
+        self.assertTrue(hasattr(new, "updated_at"))
+        self.assertTrue(hasattr(new, "name"))
+        self.assertTrue(hasattr(new, "number_rooms"))
+        self.assertTrue(hasattr(new, "number_bathrooms"))
+        self.assertTrue(hasattr(new, "max_guest"))
+        self.assertTrue(hasattr(new, "price_by_night"))
+        self.assertTrue(hasattr(new, "latitude"))
+        self.assertTrue(hasattr(new, "longitude"))
+        self.assertTrue(hasattr(new, "amenity_ids"))
+        """type test"""
+        self.assertIsInstance(new.name, str)
+        self.assertIsInstance(new.number_rooms, int)
+        self.assertIsInstance(new.number_bathrooms, int)
+        self.assertIsInstance(new.max_guest, int)
+        self.assertIsInstance(new.price_by_night, int)
+        self.assertIsInstance(new.latitude, float)
+        self.assertIsInstance(new.longitude, float)
+        self.assertIsInstance(new.amenity_ids, list)
 
 
 class Testcodestyle(unittest.TestCase):
