@@ -48,11 +48,10 @@ class HBNBCommand(cmd.Cmd):
 
     def diff_syntax(self, arg):
         """Parses the input and handles custom syntax"""
-        if "(" in arg and ")" in arg:
+        if '(' in arg and ')' in arg:
             match = re.search(r"(\w+)\.(\w+)\(\)", arg)
             if match:
                 class_name = match.group(1)
-                method_name = match.group(2)
                 arg = f"{match.group(2)} {class_name}"
         return arg
 
