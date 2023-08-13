@@ -8,6 +8,7 @@ from models.amenity import Amenity
 from models.review import Review
 from models.base_model import BaseModel
 from models import storage
+import pycodestyle
 
 
 class TestFileStorage(unittest.TestCase):
@@ -33,6 +34,15 @@ class TestFileStorage(unittest.TestCase):
         all_objects = storage.all()
         self.assertIn(f"User.{user.id}", all_objects)
         self.assertIsInstance(all_objects[f"User.{user.id}"], User)
+
+class Testcodestyle(unittest.TestCase):
+    """test codestyle"""
+    def test_pep8(self):
+        """test pep8"""
+        pyc = pycodestyle.StyleGuide(quiet=True)
+        result = pyc.check_files(["models/user.py"])
+        errorMessage = "Found code style errors (and warnings)."
+        self.assertEqual(result.total_errors, 0, errorMessage)
 
 
 if __name__ == '__main__':

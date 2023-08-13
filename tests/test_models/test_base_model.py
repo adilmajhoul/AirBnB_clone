@@ -4,6 +4,7 @@ import unittest
 from models.base_model import BaseModel
 from datetime import datetime
 from time import sleep
+import pycodestyle
 
 
 class TestBaseModel(unittest.TestCase):
@@ -48,6 +49,15 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(instance_dict["created_at"], str)
         self.assertIsInstance(instance_dict["updated_at"], str)
         self.assertEqual(instance_dict["__class__"], "BaseModel")
+
+class Testcodestyle(unittest.TestCase):
+    """test codestyle"""
+    def test_pep8(self):
+        """test pep8"""
+        pyc = pycodestyle.StyleGuide(quiet=True)
+        result = pyc.check_files(["models/user.py"])
+        errorMessage = "Found code style errors (and warnings)."
+        self.assertEqual(result.total_errors, 0, errorMessage)
 
 
 if __name__ == "__main__":
