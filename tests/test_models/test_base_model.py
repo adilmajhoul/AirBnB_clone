@@ -50,6 +50,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(instance_dict["updated_at"], str)
         self.assertEqual(instance_dict["__class__"], "BaseModel")
 
+
 class Testcodestyle(unittest.TestCase):
     """test codestyle"""
     def test_pep8(self):

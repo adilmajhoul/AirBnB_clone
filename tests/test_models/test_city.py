@@ -47,7 +47,6 @@ class TestCity(unittest.TestCase):
         self.assertEqual(len_after, len_before + 1)
 
 
-
 class Testcodestyle(unittest.TestCase):
     """test codestyle"""
     def test_pep8(self):
