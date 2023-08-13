@@ -40,6 +40,8 @@ class TestCity(unittest.TestCase):
         len_after = len(storage.all())
         self.assertEqual(len_after, len_before + 1)
 
+class Testpycodestyle(unittest.TestCase):
+    pass
 
 if __name__ == '__main__':
     unittest.main()
