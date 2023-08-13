@@ -285,7 +285,8 @@ class HBNBcmd_show(unittest.TestCase):
             HBNBCommand().onecmd("show Place 123456-123456-123456-123456")
             self.assertEqual(cls, output.getvalue().strip())
         with patch("sys.stdout", new_callable=StringIO) as output:
-            HBNBCommand().onecmd("show State 123456-123456-" "123456-123456-123456")
+            HBNBCommand().onecmd("show State 123456-123456-"
+                                 "123456-123456-123456")
             self.assertEqual(cls, output.getvalue().strip())
         with patch("sys.stdout", new_callable=StringIO) as output:
             HBNBCommand().onecmd(
@@ -299,7 +300,8 @@ class HBNBcmd_show(unittest.TestCase):
             self.assertEqual(cls, output.getvalue().strip())
         with patch("sys.stdout", new_callable=StringIO) as output:
             HBNBCommand().onecmd(
-                "show Review 123456-123456-123456-" "123456-123456-123456-123456-123456"
+                "show Review 123456-123456-123456-"
+                 "123456-123456-123456-123456-123456"
             )
             self.assertEqual(cls, output.getvalue().strip())
 
