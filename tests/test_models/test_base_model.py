@@ -14,7 +14,8 @@ class TestBaseModel(unittest.TestCase):
     def test_constructor_with_kwargs(self):
         created_at_str = "2023-08-11T12:01:01.000001"
         updated_at_str = "2023-08-12T12:02:02.000002"
-        instance = BaseModel(created_at=created_at_str, updated_at=updated_at_str)
+        instance = BaseModel(created_at=created_at_str,
+                             updated_at=updated_at_str)
         self.assertEqual(instance.created_at.isoformat(), created_at_str)
         self.assertEqual(instance.updated_at.isoformat(), updated_at_str)
 

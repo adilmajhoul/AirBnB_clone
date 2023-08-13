@@ -15,7 +15,9 @@ class TestAmenity(unittest.TestCase):
         self.amenity.name = "Swimming Pool"
 
     def test_all(self):
-        """ ensure the all() method returns the correct dictionary of objects """
+        """ ensure the all() method returns
+        the correct dictionary of objects
+        """
         all_objects = storage.all()
         self.assertEqual(type(all_objects), dict)
         self.assertIs(all_objects, storage._FileStorage__objects)
@@ -28,7 +30,10 @@ class TestAmenity(unittest.TestCase):
         self.assertNotEqual(new_count, initial_count + 1)
 
     def test_save_reload(self):
-        """ ensure that objects are correctly saved and reloaded from the JSON file """
+        """
+        ensure that objects are correctly
+        saved and reloaded from the JSON file
+        """
         storage.new(self.amenity)
         storage.save()
 

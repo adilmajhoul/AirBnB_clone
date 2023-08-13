@@ -301,7 +301,7 @@ class HBNBcmd_show(unittest.TestCase):
         with patch("sys.stdout", new_callable=StringIO) as output:
             HBNBCommand().onecmd(
                 "show Review 123456-123456-123456-"
-                 "123456-123456-123456-123456-123456"
+                "123456-123456-123456-123456-123456"
             )
             self.assertEqual(cls, output.getvalue().strip())
 
