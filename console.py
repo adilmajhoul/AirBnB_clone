@@ -47,39 +47,38 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def diff_syntax(self, arg):
-            """Method to take care of following commands:
-            <class name>.all()
-            <class name>.count()
-            ... (other commands)
-            """
-            new_syntax = {
-                "all": self.do_all,
-                "count": self.do_count,
-                "show": self.do_show,
-                "destroy": self.do_destroy,
-                "update": self.do_update,
-                "create": self.do_create,
-            }
-            match = re.search(r"\.", arg)
+        """Method to take care of following commands:
+        <class name>.all()
+        <class name>.count()
+        ... (other commands)
+        """
+        new_syntax = {
+            "all": self.do_all,
+            "count": self.do_count,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update,
+            "create": self.do_create,
+        }
+        match = re.search(r"\.", arg)
+        if match is not None:
+            argu = [arg[:match.span()[0]], arg[match.span()[1]:]]
+            if argu[1] == "all()" or argu[1] == "all":
+                if argu[0] in HBNBCommand.__models_classes:
+                    return self.do_all(argu[0])
+                else:
+                    print("** Class doesn't exist **")
+            match = re.search(r"\((.*?)\)", argu[1])
             if match is not None:
-                argu = [arg[:match.span()[0]], arg[match.span()[1]:]]
-                if argu[1] == "all()" or argu[1] == "all":
+                command = [argu[1][:match.span()[0]], match.group()[1:-1]]
+                if command[0] in new_syntax.keys():
+                    call = "{} {}".format(argu[0], command[1])
                     if argu[0] in HBNBCommand.__models_classes:
-                        return self.do_all(argu[0])
+                        return new_syntax[command[0]](call)
                     else:
                         print("** Class doesn't exist **")
-                match = re.search(r"\((.*?)\)", argu[1])
-                if match is not None:
-                    command = [argu[1][:match.span()[0]], match.group()[1:-1]]
-                    if command[0] in new_syntax.keys():
-                        call = "{} {}".format(argu[0], command[1])
-                        if argu[0] in HBNBCommand.__models_classes:
-                            return new_syntax[command[0]](call)
-                        else:
-                            print("** Class doesn't exist **")
-            print("*** Unknown syntax: {}".format(arg))
-            return False
-
+        print("*** Unknown syntax: {}".format(arg))
+        return False
 
     def do_quit(self, line):
         """Quit command to exit the program"""
@@ -209,12 +208,6 @@ class HBNBCommand(cmd.Cmd):
                 if arg[0] == key.__class__.__name__:
                     count += 1
             print(count)
-
-
-
-    def do_clear(self, arg):
-        """clear the console"""
-        os.system("clear")
 
 
 if __name__ == "__main__":
