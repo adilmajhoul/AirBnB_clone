@@ -123,3 +123,9 @@ ul,
 ol {
     list-style: none;
 }
+
+
+
+.filters .amenities .popover {
+    width: 85%;
+}
