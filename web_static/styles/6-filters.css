@@ -82,10 +82,9 @@ section {
 
 
 
-.locations:hover .popover,
+.filters .locations:hover .popover,
 .filters .amenities:hover .popover {
     display: block;
-
 }
 
 
@@ -112,13 +111,18 @@ section {
     margin: 12px auto 12px 30px;
 }
 
+/* OMG I FIXED IT IM A KING :)))))))))))) */
+.filters .amenities ul {
+    margin: auto auto auto auto;
+}
+
 
 .filters h2 {
 
     margin: 12px auto 0 30px;
 }
 
-/* remove bullet points from both unordered and ordered lists */
+
 ul,
 ol {
     list-style: none;
@@ -126,6 +130,11 @@ ol {
 
 
 
-.filters .amenities .popover {
-    width: 85%;
+.filters .locations h2 {
+    font-size: 16px;
+}
+
+
+.filters .popover {
+    top: 100%;
 }
